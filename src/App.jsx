@@ -71,16 +71,16 @@ function App() {
   return (
     <div className="app-container">
       <header>
-        <h1>💤 Sleep-Habit Coach</h1>
-        <p>Track your sleep & habits</p>
+        <h1>💤 숙면 습관 코치</h1>
+        <p>수면과 습관을 기록해보세요</p>
       </header>
 
       <div className="grid">
         <div className="card form-card">
-          <h2>Log Tonight</h2>
+          <h2>오늘 밤 수면 기록</h2>
           <form onSubmit={handleSubmit}>
             <label>
-              Hours Slept:
+              수면시간 (시간):
               <input
                 type="number"
                 step="0.5"
@@ -93,33 +93,33 @@ function App() {
             </label>
 
             <fieldset>
-              <legend>Bedtime Routine:</legend>
+              <legend>취침 전 습관:</legend>
               <label className="checkbox">
                 <input type="checkbox" checked={meditation} onChange={(e) => setMeditation(e.target.checked)} />
-                Meditated
+                명상했어요
               </label>
               <label className="checkbox">
                 <input type="checkbox" checked={noScreen} onChange={(e) => setNoScreen(e.target.checked)} />
-                No screens after 9pm
+                밤 9시 이후 화면 없음
               </label>
               <label className="checkbox">
                 <input type="checkbox" checked={blueLight} onChange={(e) => setBlueLight(e.target.checked)} />
-                Blue light filter on
+                블루라이트 필터 켜기
               </label>
             </fieldset>
 
             <label>
-              Morning Mood:
+              아침 기분:
               <input type="range" min="1" max="5" value={mood} onChange={(e) => setMood(parseInt(e.target.value))} />
               <span>{['😴', '😑', '😐', '🙂', '😄'][mood - 1]}</span>
             </label>
 
-            <button type="submit">Log Sleep</button>
+            <button type="submit">기록하기</button>
           </form>
         </div>
 
         <div className="card chart-card">
-          <h2>7-Day Trend</h2>
+          <h2>7일 변화</h2>
           {chartData.length > 0 ? (
             <ResponsiveContainer width="100%" height={250}>
               <LineChart data={chartData}>
@@ -131,41 +131,41 @@ function App() {
               </LineChart>
             </ResponsiveContainer>
           ) : (
-            <p className="empty">No data yet. Start logging!</p>
+            <p className="empty">아직 기록이 없습니다. 기록을 시작해보세요!</p>
           )}
         </div>
 
         <div className="card insight-card">
-          <h2>Insights</h2>
+          <h2>분석</h2>
           {logs.length > 0 ? (
             <>
               {meditationLogs.length > 0 && (
                 <p>
-                  <strong>With Meditation:</strong> {avgWithMeditation}h avg ({meditationLogs.length} days)
+                  <strong>명상한 날:</strong> 평균 {avgWithMeditation}시간 ({meditationLogs.length}일)
                 </p>
               )}
               {noMeditationLogs.length > 0 && (
                 <p>
-                  <strong>Without Meditation:</strong> {avgWithoutMeditation}h avg ({noMeditationLogs.length} days)
+                  <strong>명상하지 않은 날:</strong> 평균 {avgWithoutMeditation}시간 ({noMeditationLogs.length}일)
                 </p>
               )}
               <p>
-                <strong>Meditation Streak:</strong> {streak} days 🔥
+                <strong>연속 명상:</strong> {streak}일 🔥
               </p>
               <p className="diff">
                 {!canCompare ? (
-                  'Still gathering data. Record both meditation and non-meditation days to compare patterns.'
+                  '아직 비교할 기록이 부족합니다.\n며칠 더 기록해보세요.'
                 ) : !hasEnoughData ? (
-                  'Not enough data yet. Log at least 3 days with and without meditation to see patterns.'
+                  '아직 비교할 기록이 부족합니다.\n며칠 더 기록해보세요.'
                 ) : avgWithMeditation > avgWithoutMeditation ? (
-                  `In your current records, meditation days average ${avgWithMeditation}h vs ${avgWithoutMeditation}h without meditation.`
+                  `현재 기록에 따르면 명상한 날의 평균 수면시간(${avgWithMeditation}시간)이 명상하지 않은 날(${avgWithoutMeditation}시간)보다 더 깁니다.`
                 ) : (
-                  `In your current records, non-meditation days average ${avgWithoutMeditation}h vs ${avgWithMeditation}h with meditation.`
+                  `현재 기록에 따르면 명상하지 않은 날의 평균 수면시간(${avgWithoutMeditation}시간)이 명상한 날(${avgWithMeditation}시간)보다 더 깁니다.`
                 )}
               </p>
             </>
           ) : (
-            <p className="empty">Log a few days to see patterns</p>
+            <p className="empty">며칠 더 기록해서 패턴을 확인해보세요</p>
           )}
         </div>
       </div>

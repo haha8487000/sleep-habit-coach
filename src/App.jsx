@@ -44,13 +44,20 @@ function App() {
     sleep: log.sleepHours,
   }))
 
-  const avgWithMeditation = logs.filter(l => l.meditation).length > 0
-    ? (logs.filter(l => l.meditation).reduce((sum, l) => sum + l.sleepHours, 0) / logs.filter(l => l.meditation).length).toFixed(1)
+  const meditationLogs = logs.filter(l => l.meditation)
+  const noMeditationLogs = logs.filter(l => !l.meditation)
+
+  const avgWithMeditation = meditationLogs.length > 0
+    ? (meditationLogs.reduce((sum, l) => sum + l.sleepHours, 0) / meditationLogs.length).toFixed(1)
     : 0
 
-  const avgWithoutMeditation = logs.filter(l => !l.meditation).length > 0
-    ? (logs.filter(l => !l.meditation).reduce((sum, l) => sum + l.sleepHours, 0) / logs.filter(l => !l.meditation).length).toFixed(1)
+  const avgWithoutMeditation = noMeditationLogs.length > 0
+    ? (noMeditationLogs.reduce((sum, l) => sum + l.sleepHours, 0) / noMeditationLogs.length).toFixed(1)
     : 0
+
+  // 비교 가능 여부 확인
+  const canCompare = meditationLogs.length > 0 && noMeditationLogs.length > 0
+  const hasEnoughData = meditationLogs.length >= 3 && noMeditationLogs.length >= 3
 
   const streak = (() => {
     let count = 0
@@ -132,19 +139,29 @@ function App() {
           <h2>Insights</h2>
           {logs.length > 0 ? (
             <>
-              <p>
-                <strong>With Meditation:</strong> {avgWithMeditation}h avg
-              </p>
-              <p>
-                <strong>Without Meditation:</strong> {avgWithoutMeditation}h avg
-              </p>
+              {meditationLogs.length > 0 && (
+                <p>
+                  <strong>With Meditation:</strong> {avgWithMeditation}h avg ({meditationLogs.length} days)
+                </p>
+              )}
+              {noMeditationLogs.length > 0 && (
+                <p>
+                  <strong>Without Meditation:</strong> {avgWithoutMeditation}h avg ({noMeditationLogs.length} days)
+                </p>
+              )}
               <p>
                 <strong>Meditation Streak:</strong> {streak} days 🔥
               </p>
               <p className="diff">
-                {avgWithMeditation > avgWithoutMeditation
-                  ? `Meditating helps you sleep ${(avgWithMeditation - avgWithoutMeditation).toFixed(1)}h longer!`
-                  : 'Keep logging to see patterns.'}
+                {!canCompare ? (
+                  'Still gathering data. Record both meditation and non-meditation days to compare patterns.'
+                ) : !hasEnoughData ? (
+                  'Not enough data yet. Log at least 3 days with and without meditation to see patterns.'
+                ) : avgWithMeditation > avgWithoutMeditation ? (
+                  `In your current records, meditation days average ${avgWithMeditation}h vs ${avgWithoutMeditation}h without meditation.`
+                ) : (
+                  `In your current records, non-meditation days average ${avgWithoutMeditation}h vs ${avgWithMeditation}h with meditation.`
+                )}
               </p>
             </>
           ) : (

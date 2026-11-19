@@ -1,0 +1,11 @@
+{
+  "fps": 30,
+  "scenes": [
+    { "id": "hook",    "seconds": 3.9, "vo": "vo1.wav", "caption": "아이는 하루 400번, 어른은 7번 웃는다?" },
+    { "id": "twist",   "seconds": 3.0, "vo": "vo2.wav", "caption": "사실, 이 숫자엔 출처가 없습니다" },
+    { "id": "origin",  "seconds": 4.4, "vo": "vo3.wav", "caption": "1998년, 한 학회에서 나온 말이 퍼졌다고 합니다" },
+    { "id": "pivot",   "seconds": 3.4, "vo": "vo4.wav", "caption": "하지만 진짜 중요한 건, 숫자가 아닙니다" },
+    { "id": "decline", "seconds": 3.3, "vo": "vo5.wav", "caption": "어른이 될수록, 웃음이 줄어든다는 것" },
+    { "id": "cta",     "seconds": 6.6, "vo": "vo6.wav", "caption": "오늘, 세 번만 더 웃어보세요" }
+  ]
+}
